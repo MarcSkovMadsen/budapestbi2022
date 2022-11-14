@@ -1,13 +1,19 @@
 import panel as pn
-
+import param
 pn.extension(sizing_mode="stretch_width")
 
-def page_outline():
-    return """
-Hello
-"""
+class Page(pn.viewable.Viewer):
+    def view(self):
+        raise NotImplementedError()
+    
+    def __panel__(self):
+        return self.view
 
-PAGES = [page_outline]
+class Outline(Page):
+    def view(self):
+        return "Hello"
+
+PAGES = [Outline()]
 
 selector = pn.widgets.RadioButtonGroup(name="Page", value=PAGES[0], options=PAGES)
 
